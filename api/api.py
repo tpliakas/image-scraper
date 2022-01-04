@@ -8,6 +8,18 @@ import os
 app = Flask(__name__)
 
 
+def uniquify(folder):
+    path = os.path.join(str(os.path.join(Path.home(), "Downloads")), folder)
+    counter = 1
+    uniquify_folder = path
+
+    while os.path.exists(uniquify_folder):
+        uniquify_folder = path + '-' + str(counter)
+        counter += 1
+
+    return uniquify_folder
+
+
 @app.route('/scrape', methods=['POST'], strict_slashes=False)
 def image_scraper():
     folder = request.json['folder']
@@ -15,8 +27,7 @@ def image_scraper():
     url = request.json['url']
 
     try:
-        path = os.path.join(str(os.path.join(Path.home(), "Downloads")), folder)
-        # TODO: if path exists add index number to folder name
+        path = uniquify(folder)
         os.mkdir(path)
         os.chdir(path)
     except:
@@ -33,10 +44,13 @@ def image_scraper():
         name = image.get('alt', image.get('title'))
         link = image.get('src', image.get('data-src'))
 
-        if link is None or not link.startswith('http'):
-            print(image)
+        if not link.startswith('http'):
+            link = url + link
+
+        if link is None:
             non_valid += 1
             continue
+
         if name is None or name == '':
             name = str(idx)
 
