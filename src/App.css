@@ -2,6 +2,13 @@
   border-radius: 50px !important;
 }
 
-.MuiFilledInput-root:before, .MuiFilledInput-root:after {
+.MuiFilledInput-root:before,
+.MuiFilledInput-root:after {
   border: none !important;
+}
+
+.image:hover {
+  cursor: pointer;
+  filter: brightness(75%);
+  transition: filter 300ms ease;
 }
