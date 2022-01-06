@@ -63,4 +63,5 @@ def image_scraper():
             f.write(im_rq.content)
             print('Creating image #' + str(idx))
 
+    os.chdir('..')
     return jsonify(images=images_list)
