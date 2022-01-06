@@ -1,7 +1,8 @@
+import { useEffect, useState, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import LinkIcon from "@mui/icons-material/Link";
+import HttpIcon from "@mui/icons-material/Http";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -9,9 +10,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Button from "@mui/material/Button";
-import Box from '@mui/material/Box';
-
-import { useState } from "react";
+import Box from "@mui/material/Box";
 
 const defaultValues = {
   url: "",
@@ -27,9 +26,18 @@ const defaultErrors = {
 
 const folderRegex = /[A-Za-z0-9\-_]+$/;
 
-const Form = ({ setImagesList }) => {
+const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
+const Form = ({ setImagesList, setLoading }) => {
   const [formValues, setFormValues] = useState(defaultValues);
   const [errors, setErrors] = useState(defaultErrors);
+  const prevValue = usePrevious(formValues);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +51,11 @@ const Form = ({ setImagesList }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (formValues === prevValue) return;
+
+    setImagesList([]);
+    setLoading(true);
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -52,6 +65,7 @@ const Form = ({ setImagesList }) => {
       const response = await fetch("/scrape", requestOptions);
       const result = await response.json();
       setImagesList(result?.images);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -72,7 +86,7 @@ const Form = ({ setImagesList }) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <LinkIcon fontSize="large" />
+                  <HttpIcon fontSize="large" />
                 </InputAdornment>
               ),
             }}
@@ -107,31 +121,31 @@ const Form = ({ setImagesList }) => {
         </Grid>
         <Grid item xs={12} lg={6} style={{ marginTop: "4rem" }}>
           <Box display="flex" justifyContent="flex-end">
-          <FormControl component="fieldset">
-            <FormLabel component="legend">For image name use:</FormLabel>
-            <RadioGroup
-              required
-              row
-              aria-label="gender"
-              name="imageNames"
-              value={formValues.imageNames}
-              onChange={handleInputChange}
-            >
-              <FormControlLabel
-                value="alt-title"
-                control={<Radio />}
-                label="alt / title"
-              />
-              <FormControlLabel
-                value="number"
-                control={<Radio />}
-                label="index number"
-              />
-            </RadioGroup>
-          </FormControl>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">For image name use:</FormLabel>
+              <RadioGroup
+                required
+                row
+                aria-label="gender"
+                name="imageNames"
+                value={formValues.imageNames}
+                onChange={handleInputChange}
+              >
+                <FormControlLabel
+                  value="alt-title"
+                  control={<Radio />}
+                  label="alt / title"
+                />
+                <FormControlLabel
+                  value="number"
+                  control={<Radio />}
+                  label="index number"
+                />
+              </RadioGroup>
+            </FormControl>
           </Box>
         </Grid>
-        <Grid item lg={12} style={{ textAlign: "center", paddingTop: "2rem" }} >
+        <Grid item lg={12} style={{ textAlign: "center", paddingTop: "2rem" }}>
           <Button
             variant="contained"
             disableElevation
@@ -142,7 +156,10 @@ const Form = ({ setImagesList }) => {
           </Button>
           <Button
             style={{ marginTop: "2rem", marginLeft: "1rem" }}
-            onClick={() => setFormValues(defaultValues)}
+            onClick={() => {
+              setFormValues(defaultValues);
+              setImagesList([]);
+            }}
           >
             Clear
           </Button>

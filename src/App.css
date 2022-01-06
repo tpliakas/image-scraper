@@ -12,3 +12,12 @@
   filter: brightness(75%);
   transition: filter 300ms ease;
 }
+
+.image:last-child {
+  margin-bottom: 2rem;
+}
+
+.loader {
+  text-align: center;
+  margin-top: 5rem;
+}

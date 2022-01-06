@@ -2,6 +2,7 @@ import { useState } from "react";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Form from "./components/Form";
 import ImagesList from "./components/ImagesList";
@@ -16,6 +17,7 @@ const options = {
 
 function App() {
   const [imagesList, setImagesList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -26,25 +28,31 @@ function App() {
             Image scraper
           </Typography>
           <Typography variant="body1" component="div" gutterBottom>
-            When you scrape the images from the desired website, a folder will be
-            created in your local machine's downloads folder. Also, you will be
-            able to see the images that were downloaded here, in a gallery.
+            When you scrape the images from the desired website, a folder will
+            be created in your local machine's downloads folder. Also, you will
+            be able to see the images that were downloaded here, in a gallery.
           </Typography>
         </Grid>
         <Grid item xs={0} lg={2} />
 
         <Grid item xs={0} lg={2} />
         <Grid item xs={12} lg={8}>
-          <Form setImagesList={setImagesList} />
+          <Form setImagesList={setImagesList} setLoading={setLoading} />
         </Grid>
-          <Grid item xs={0} lg={2} />
+        <Grid item xs={0} lg={2} />
+      </Grid>
 
+      {loading ? (
+        <div className="loader">
+          <CircularProgress />
+        </div>
+      ) : (
         <SimpleReactLightbox>
           <SRLWrapper options={options}>
             <ImagesList imagesList={imagesList} />
           </SRLWrapper>
         </SimpleReactLightbox>
-      </Grid>
+      )}
     </>
   );
 }
