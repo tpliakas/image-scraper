@@ -126,7 +126,6 @@ const Form = ({ setImagesList, setLoading }) => {
               <RadioGroup
                 required
                 row
-                aria-label="gender"
                 name="imageNames"
                 value={formValues.imageNames}
                 onChange={handleInputChange}

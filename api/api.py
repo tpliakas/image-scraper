@@ -51,14 +51,16 @@ def image_scraper():
             non_valid += 1
             continue
 
-        if name is None or name == '':
+        if image_names == 'number' or name is None or name == '':
             name = str(idx)
+
+        # TODO: improve
+        if image_names == 'alt-title':
+            name.replace(' ', '-').replace('/', '').replace('@', '-').replace(':', '').replace('"', '')
 
         images_list.append(link)
 
-        # TODO: check if alt/title or index number and use it for image name
-
-        with open(str(idx) + '.jpg', 'wb') as f:
+        with open(name + '.jpg', 'wb') as f:
             im_rq = requests.get(link)
             f.write(im_rq.content)
             print('Creating image #' + str(idx))
