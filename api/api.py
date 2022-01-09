@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 from flask import request
-import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
+import helpers
 import os
+import requests
+
 
 app = Flask(__name__)
 
@@ -54,9 +56,8 @@ def image_scraper():
         if image_names == 'number' or name is None or name == '':
             name = str(idx)
 
-        # TODO: improve
         if image_names == 'alt-title':
-            name.replace(' ', '-').replace('/', '').replace('@', '-').replace(':', '').replace('"', '')
+            name = helpers.replace_all(name, helpers.chars_to_replace)
 
         images_list.append(link)
 
