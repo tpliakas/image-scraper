@@ -34,6 +34,7 @@ const usePrevious = (value) => {
   return ref.current;
 };
 
+// TODO: Error handling
 const Form = ({ setImagesList, setLoading }) => {
   const [formValues, setFormValues] = useState(defaultValues);
   const [errors, setErrors] = useState(defaultErrors);

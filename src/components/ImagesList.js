@@ -52,7 +52,7 @@ export default function ImagesList({ imagesList }) {
             <img
               src={`${item}?w=150&h=150&fit=crop&auto=format`}
               srcSet={`${item}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
-              alt={`image${idx}`}
+              alt={`gallery image${idx}`}
               loading="lazy"
               className="image"
             />
