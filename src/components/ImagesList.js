@@ -14,10 +14,10 @@ const theme = createTheme({
   },
 });
 
-export default function ImagesList({ imagesList }) {
+export default function ImagesList({ imagesList, requestError }) {
   const ref = useRef(null);
 
-  return imagesList ? (
+  return !requestError && imagesList?.length ? (
     <ThemeProvider theme={theme}>
       <Box
         ref={ref}

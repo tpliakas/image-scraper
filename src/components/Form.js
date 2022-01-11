@@ -24,6 +24,8 @@ const defaultErrors = {
   imageNames: false,
 };
 
+const defaultRequestError = "An error occurred. Please try again later.";
+
 const folderRegex = /[A-Za-z0-9\-_]+$/;
 
 const usePrevious = (value) => {
@@ -35,9 +37,9 @@ const usePrevious = (value) => {
 };
 
 // TODO: Error handling
-const Form = ({ setImagesList, setLoading }) => {
+const Form = ({ setRequestError, setImagesList, setLoading }) => {
   const [formValues, setFormValues] = useState(defaultValues);
-  const [errors, setErrors] = useState(defaultErrors);
+  // const [error, setError] = useState(defaultErrors);
   const prevValue = usePrevious(formValues);
 
   const handleInputChange = (e) => {
@@ -68,7 +70,8 @@ const Form = ({ setImagesList, setLoading }) => {
       setImagesList(result?.images);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      setRequestError(defaultRequestError);
+      setLoading(false);
     }
   };
 
@@ -159,6 +162,7 @@ const Form = ({ setImagesList, setLoading }) => {
             onClick={() => {
               setFormValues(defaultValues);
               setImagesList([]);
+              setRequestError(null)
             }}
           >
             Clear

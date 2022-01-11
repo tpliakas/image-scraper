@@ -1,6 +1,8 @@
 import { useState } from "react";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
+import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -16,6 +18,7 @@ const options = {
 };
 
 function App() {
+  const [requestError, setRequestError] = useState('');
   const [imagesList, setImagesList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +40,16 @@ function App() {
 
         <Grid item xs={0} lg={2} />
         <Grid item xs={12} lg={8}>
-          <Form setImagesList={setImagesList} setLoading={setLoading} />
+          <Form
+            setImagesList={setImagesList}
+            setLoading={setLoading}
+            setRequestError={setRequestError}
+          />
+          {requestError && (
+            <Box m={2} pt={3}>
+              <Alert severity="error">{requestError}</Alert>
+            </Box>
+          )}
         </Grid>
         <Grid item xs={0} lg={2} />
       </Grid>
@@ -49,7 +61,7 @@ function App() {
       ) : (
         <SimpleReactLightbox>
           <SRLWrapper options={options}>
-            <ImagesList imagesList={imagesList} />
+            <ImagesList imagesList={imagesList} requestError={requestError} />
           </SRLWrapper>
         </SimpleReactLightbox>
       )}
