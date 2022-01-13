@@ -14,9 +14,9 @@ def image_scraper():
     folder = request.json['folder']
     image_names = request.json['imageNames']
     url = request.json['url']
+    path = helpers.uniquify(folder)
 
     try:
-        path = helpers.uniquify(folder)
         os.mkdir(path)
         os.chdir(path)
     except:
@@ -27,6 +27,7 @@ def image_scraper():
 
     images = soup.find_all('img')
     non_valid = 0
+    image_counter = 0
     images_list = []
 
     for idx, image in enumerate(images):
@@ -48,10 +49,13 @@ def image_scraper():
 
         images_list.append(link)
 
-        with open(name + '.jpg', 'wb') as f:
-            im_rq = requests.get(link)
-            f.write(im_rq.content)
-            print('Creating image #' + str(idx))
+        try:
+            with open(name + '.jpg', 'wb') as f:
+                im_rq = requests.get(link)
+                f.write(im_rq.content)
+                image_counter += 1
+        except:
+            continue
 
     os.chdir('..')
-    return jsonify(images=images_list)
+    return jsonify(images=images_list, folder=path, total=image_counter)
