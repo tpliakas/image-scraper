@@ -37,7 +37,13 @@ const usePrevious = (value) => {
 };
 
 // TODO: Error handling
-const Form = ({ setRequestError, setImagesList, setLoading }) => {
+const Form = ({
+  setCounter,
+  setFolder,
+  setRequestError,
+  setImagesList,
+  setLoading,
+}) => {
   const [formValues, setFormValues] = useState(defaultValues);
   // const [error, setError] = useState(defaultErrors);
   const prevValue = usePrevious(formValues);
@@ -51,12 +57,24 @@ const Form = ({ setRequestError, setImagesList, setLoading }) => {
     });
   };
 
+  const clearResults = () => {
+    setImagesList([]);
+    setRequestError(null);
+    setFolder(null);
+    setCounter(null);
+  }
+
+  const clearAll = () => {
+    setFormValues(defaultValues);
+    clearResults();
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (formValues === prevValue) return;
 
-    setImagesList([]);
+    clearResults();
     setLoading(true);
 
     const requestOptions = {
@@ -68,6 +86,8 @@ const Form = ({ setRequestError, setImagesList, setLoading }) => {
       const response = await fetch("/scrape", requestOptions);
       const result = await response.json();
       setImagesList(result?.images);
+      setFolder(result?.folder);
+      setCounter(result?.total);
       setLoading(false);
     } catch (error) {
       setRequestError(defaultRequestError);
@@ -159,11 +179,7 @@ const Form = ({ setRequestError, setImagesList, setLoading }) => {
           </Button>
           <Button
             style={{ marginTop: "2rem", marginLeft: "1rem" }}
-            onClick={() => {
-              setFormValues(defaultValues);
-              setImagesList([]);
-              setRequestError(null)
-            }}
+            onClick={clearAll}
           >
             Clear
           </Button>

@@ -18,8 +18,10 @@ const options = {
 };
 
 function App() {
-  const [requestError, setRequestError] = useState('');
+  const [requestError, setRequestError] = useState("");
   const [imagesList, setImagesList] = useState([]);
+  const [folder, setFolder] = useState([]);
+  const [counter, setCounter] = useState([]);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -28,7 +30,7 @@ function App() {
         <Grid item xs={0} lg={2} />
         <Grid item xs={12} lg={8}>
           <Typography variant="h3" component="div" gutterBottom>
-            Image scraper
+            <strong>Image scraper</strong>
           </Typography>
           <Typography variant="body1" component="div" gutterBottom>
             When you scrape the images from the desired website, a folder will
@@ -41,6 +43,8 @@ function App() {
         <Grid item xs={0} lg={2} />
         <Grid item xs={12} lg={8}>
           <Form
+            setCounter={setCounter}
+            setFolder={setFolder}
             setImagesList={setImagesList}
             setLoading={setLoading}
             setRequestError={setRequestError}
@@ -53,6 +57,25 @@ function App() {
         </Grid>
         <Grid item xs={0} lg={2} />
       </Grid>
+
+      {(counter || folder) && (
+        <Grid container spacing={2} style={{ padding: "2rem" }}>
+          <Grid item xs={0} lg={2} />
+          <Grid item xs={12} lg={8}>
+            {counter && (
+              <Typography variant="body1" component="div" gutterBottom>
+                <strong>Number of images scraped:</strong> {counter}
+              </Typography>
+            )}
+            {folder && (
+              <Typography variant="body1" component="div" gutterBottom>
+                <strong>System path:</strong> {folder}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={0} lg={2} />
+        </Grid>
+      )}
 
       {loading ? (
         <div className="loader">
