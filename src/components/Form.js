@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { useWindowDimensions } from "../helpers";
 
 const defaultValues = {
   url: "",
@@ -47,6 +48,8 @@ const Form = ({
   const [formValues, setFormValues] = useState(defaultValues);
   // const [error, setError] = useState(defaultErrors);
   const prevValue = usePrevious(formValues);
+
+  const { width } = useWindowDimensions();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -113,6 +116,9 @@ const Form = ({
                   <HttpIcon fontSize="large" />
                 </InputAdornment>
               ),
+              style: {
+                background: "white"
+              }
             }}
             value={formValues.url || ""}
             onChange={handleInputChange}
@@ -134,19 +140,24 @@ const Form = ({
             }
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position="end" color="white">
                   <CreateNewFolderIcon />
                 </InputAdornment>
               ),
+              style: {
+                background: "white",
+                borderRadius: 25,
+                paddingLeft: 5
+              }
             }}
             value={formValues.folder}
             onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} lg={6} style={{ marginTop: "4rem" }}>
-          <Box display="flex" justifyContent="flex-end">
+          <Box display="flex" justifyContent={width > 1199 ? "flex-end" : "flex-start"}>
             <FormControl component="fieldset">
-              <FormLabel component="legend">For image name use:</FormLabel>
+              <FormLabel component="legend" style={{color: 'white'}}>For image name use:</FormLabel>
               <RadioGroup
                 required
                 row
@@ -172,13 +183,21 @@ const Form = ({
           <Button
             variant="contained"
             disableElevation
-            style={{ marginTop: "2rem" }}
+            style={{
+              marginTop: "2rem",
+              padding: '10px 30px',
+              borderRadius: 25
+          }}
             type="submit"
           >
             Scrape
           </Button>
           <Button
-            style={{ marginTop: "2rem", marginLeft: "1rem" }}
+            style={{
+              marginTop: "2rem",
+              marginLeft: "1rem",
+              color: 'white'
+          }}
             onClick={clearAll}
           >
             Clear

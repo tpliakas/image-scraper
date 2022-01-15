@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap");
 
+body {
+  color: white
+}
+
 .MuiFilledInput-root {
   border-radius: 50px !important;
 }
@@ -22,4 +26,22 @@
 .loader {
   text-align: center;
   margin-top: 5rem;
+}
+
+#folder-helper-text, #folder-label, .MuiRadio-root .MuiSvgIcon-root {
+  color: white
+}
+
+.MuiSvgIcon-root {
+  padding-right: 5px
+}
+
+.image-names-box {
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 1199px) {
+  .image-names-box {
+    justify-content: flex-start;
+  }
 }
