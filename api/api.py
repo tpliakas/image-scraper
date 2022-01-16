@@ -1,6 +1,9 @@
 from flask import Flask, jsonify
 from flask import request
 from bs4 import BeautifulSoup
+# from PIL import Image
+# from io import BytesIO
+import base64
 import helpers
 import os
 import requests
@@ -29,6 +32,7 @@ def image_scraper():
     non_valid = 0
     image_counter = 0
     images_list = []
+    base = []
 
     for idx, image in enumerate(images):
         name = image.get('alt', image.get('title'))
@@ -52,10 +56,16 @@ def image_scraper():
         try:
             with open(name + '.jpg', 'wb') as f:
                 im_rq = requests.get(link)
-                f.write(im_rq.content)
+                content = im_rq.content
+
+                # TODO: fix base64
+                if 'base64' in link:
+                    content = base64.decodebytes(im_rq.content)
+
+                f.write(content)
                 image_counter += 1
         except:
             continue
 
     os.chdir('..')
-    return jsonify(images=images_list, folder=path, total=image_counter)
+    return jsonify(images=images_list, folder=path, total=image_counter, respo=base)
