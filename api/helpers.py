@@ -2,11 +2,13 @@ import os
 from pathlib import Path
 
 chars_to_replace = {
-    ' ': '=',
+    ' ': '-',
     '/': '',
     '@': '-',
     ':': '',
-    '"': ''
+    '"': '',
+    '«': '',
+    '»': ''
 }
 
 
