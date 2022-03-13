@@ -20,8 +20,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && venv/Scripts/flask run --no-debugger",
+    "start-api": "cd api && venv/bin/flask run --no-debugger",
     "dev": "concurrently \"yarn start\" \"yarn start-api\"",
+    "init-install": "concurrently \"yarn\" \"python3 -m venv api/venv\"",
+    "reqs-install": "concurrently \"pip3 install python-dotenv\" \"api/venv/bin/pip3 install -r api/requirements.txt\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
