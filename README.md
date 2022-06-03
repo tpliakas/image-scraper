@@ -14,3 +14,6 @@ Then start both frontend and backend with:
 
 The API will run at **http://127.0.0.1:5000/**
 The frontend will run at **http://localhost:3000/**
+
+### Screenshot
+![screenshot](https://github.com/tpliakas/image-scraper/blob/main/screenshot.png?raw=true)
