@@ -6,7 +6,7 @@ import os
 import requests
 
 
-app = Flask(__name__, static_folder="../build")
+app = Flask(__name__, static_folder="../build", static_url_path="/")
 
 
 @app.route('api/scrape', methods=['POST'], strict_slashes=False)
