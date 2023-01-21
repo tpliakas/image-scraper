@@ -63,6 +63,6 @@ def image_scraper():
 
     os.chdir('..')
 
-    resp = jsonify(images=images_list, folder=path, total=image_counter)
-    resp.headers['Access-Control-Allow-Origin'] = 'https://image-scraper-ui.onrender.com'
-    return resp
+    res = jsonify(images=images_list, folder=path, total=image_counter)
+    res.headers.add("Access-Control-Allow-Origin", "*")
+    return res
