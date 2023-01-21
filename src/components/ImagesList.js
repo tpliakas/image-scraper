@@ -52,7 +52,7 @@ export default function ImagesList({ imagesList, requestError }) {
             <img
               src={`${item}?w=150&h=150&fit=crop&auto=format`}
               srcSet={`${item}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
-              alt={`gallery image${idx}`}
+              alt=""
               loading="lazy"
               className="image"
             />

@@ -19,11 +19,11 @@ const defaultValues = {
   imageNames: "alt-title",
 };
 
-const defaultErrors = {
-  url: false,
-  folder: false,
-  imageNames: false,
-};
+// const defaultErrors = {
+//   url: false,
+//   folder: false,
+//   imageNames: false,
+// };
 
 const defaultRequestError = "An error occurred. Please try again later.";
 
