@@ -87,7 +87,7 @@ const Form = ({
     };
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_NOT_SECRET_CODE}/api/scrape`,
+        `${process.env.REACT_APP_API}/api/scrape`,
         requestOptions
       );
       const result = await response.json();
