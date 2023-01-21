@@ -14,6 +14,7 @@ def index():
 
 @app.route('/api/scrape', methods=['POST'], strict_slashes=False)
 def image_scraper():
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     folder = request.json['folder']
     image_names = request.json['imageNames']
     url = request.json['url']
@@ -61,4 +62,7 @@ def image_scraper():
             continue
 
     os.chdir('..')
-    return jsonify(images=images_list, folder=path, total=image_counter)
+
+    resp = jsonify(images=images_list, folder=path, total=image_counter)
+    resp.headers['Access-Control-Allow-Origin'] = 'https://image-scraper-ui.onrender.com'
+    return resp
