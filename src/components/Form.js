@@ -86,7 +86,7 @@ const Form = ({
       body: JSON.stringify(formValues),
     };
     try {
-      const response = await fetch("api/scrape", requestOptions);
+      const response = await fetch("/api/scrape", requestOptions);
       const result = await response.json();
       setImagesList(result?.images);
       setFolder(result?.folder);
