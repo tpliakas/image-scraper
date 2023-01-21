@@ -65,12 +65,12 @@ const Form = ({
     setRequestError(null);
     setFolder(null);
     setCounter(null);
-  }
+  };
 
   const clearAll = () => {
     setFormValues(defaultValues);
     clearResults();
-  }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,7 +86,7 @@ const Form = ({
       body: JSON.stringify(formValues),
     };
     try {
-      const response = await fetch("/scrape", requestOptions);
+      const response = await fetch("api/scrape", requestOptions);
       const result = await response.json();
       setImagesList(result?.images);
       setFolder(result?.folder);
@@ -117,8 +117,8 @@ const Form = ({
                 </InputAdornment>
               ),
               style: {
-                background: "white"
-              }
+                background: "white",
+              },
             }}
             value={formValues.url || ""}
             onChange={handleInputChange}
@@ -147,17 +147,22 @@ const Form = ({
               style: {
                 background: "white",
                 borderRadius: 25,
-                paddingLeft: 5
-              }
+                paddingLeft: 5,
+              },
             }}
             value={formValues.folder}
             onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} lg={6} style={{ marginTop: "4rem" }}>
-          <Box display="flex" justifyContent={width > 1199 ? "flex-end" : "flex-start"}>
+          <Box
+            display="flex"
+            justifyContent={width > 1199 ? "flex-end" : "flex-start"}
+          >
             <FormControl component="fieldset">
-              <FormLabel component="legend" style={{color: 'white'}}>For image name use:</FormLabel>
+              <FormLabel component="legend" style={{ color: "white" }}>
+                For image name use:
+              </FormLabel>
               <RadioGroup
                 required
                 row
@@ -185,9 +190,9 @@ const Form = ({
             disableElevation
             style={{
               marginTop: "2rem",
-              padding: '10px 30px',
-              borderRadius: 25
-          }}
+              padding: "10px 30px",
+              borderRadius: 25,
+            }}
             type="submit"
           >
             Scrape
@@ -196,8 +201,8 @@ const Form = ({
             style={{
               marginTop: "2rem",
               marginLeft: "1rem",
-              color: 'white'
-          }}
+              color: "white",
+            }}
             onClick={clearAll}
           >
             Clear

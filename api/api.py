@@ -9,7 +9,7 @@ import requests
 app = Flask(__name__)
 
 
-@app.route('/scrape', methods=['POST'], strict_slashes=False)
+@app.route('api/scrape', methods=['POST'], strict_slashes=False)
 def image_scraper():
     folder = request.json['folder']
     image_names = request.json['imageNames']
