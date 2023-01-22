@@ -1,10 +1,11 @@
 from flask import Flask, jsonify
-from flask import request
+from flask import request, send_file
 from flask_cors import CORS
 from bs4 import BeautifulSoup
 import helpers
 import os
 import requests
+import shutil
 
 
 app = Flask(__name__, static_folder="../build", static_url_path="/")
@@ -61,6 +62,9 @@ def image_scraper():
                 image_counter += 1
         except:
             continue
+
+    shutil.make_archive("images", 'zip', path)
+    send_file(path + "/images.zip", as_attachment=True)
 
     os.chdir('..')
 
