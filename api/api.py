@@ -15,6 +15,13 @@ CORS(app)
 def index():
     return app.send_static_file("index.html")
 
+@app.route("/api/download")
+def download_zip():
+    folder = request.json['folder']
+    path = helpers.uniquify(folder)
+    send_file(path + "/images.zip", as_attachment=True)
+
+
 @app.route('/api/scrape', methods=['POST'], strict_slashes=False)
 def image_scraper():
     folder = request.json['folder']
@@ -64,8 +71,6 @@ def image_scraper():
             continue
 
     shutil.make_archive("images", 'zip', path)
-    send_file(path + "/images.zip", as_attachment=True)
-
     os.chdir('..')
 
-    return jsonify(images=images_list, folder=path, total=image_counter)
+    return jsonify(images=images_list, folder=path, total=image_counter, lala=path+"/images.zip")
