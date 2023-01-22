@@ -16,7 +16,6 @@ def index():
 
 @app.route('/api/scrape', methods=['POST'], strict_slashes=False)
 def image_scraper():
-    resp.headers['Access-Control-Allow-Origin'] = '*'
     folder = request.json['folder']
     image_names = request.json['imageNames']
     url = request.json['url']
@@ -65,6 +64,4 @@ def image_scraper():
 
     os.chdir('..')
 
-    res = jsonify(images=images_list, folder=path, total=image_counter)
-    res.headers.add("Access-Control-Allow-Origin", "*")
-    return res
+    return jsonify(images=images_list, folder=path, total=image_counter)
