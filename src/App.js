@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import ImageIcon from "@mui/icons-material/Image";
 
 import Form from "./components/Form";
 import ImagesList from "./components/ImagesList";
@@ -21,23 +23,27 @@ const options = {
 function App() {
   const [requestError, setRequestError] = useState("");
   const [imagesList, setImagesList] = useState([]);
-  const [folder, setFolder] = useState();
   const [counter, setCounter] = useState();
   const [loading, setLoading] = useState(false);
+
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (imagesList?.length && !loading) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [imagesList, loading]);
 
   return (
     <>
       <Grid
         container
-        spacing={2}
+        spacing={0}
         style={{
           padding: "8rem 2rem",
+          marginTop: "0 !important",
           background: `linear-gradient( rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8) ), url(${bg})`,
           backgroundSize: "cover",
-          height: "100vh",
-          margin: "0 !important",
-          width: "unset !important",
-          alignItems: "center",
         }}
       >
         <Grid item xs={0} lg={2} />
@@ -67,7 +73,6 @@ function App() {
         <Grid item xs={12} lg={8}>
           <Form
             setCounter={setCounter}
-            setFolder={setFolder}
             setImagesList={setImagesList}
             setLoading={setLoading}
             setRequestError={setRequestError}
@@ -81,8 +86,8 @@ function App() {
         <Grid item xs={0} lg={2} />
       </Grid>
 
-      {(counter || folder) && (
-        <Grid container spacing={2} style={{ padding: "2rem" }}>
+      {counter && (
+        <Grid ref={scrollRef} container spacing={2} style={{ padding: "2rem" }}>
           <Grid item xs={0} lg={2} />
           <Grid item xs={12} lg={8}>
             {counter && (
@@ -95,16 +100,6 @@ function App() {
                 <strong>Number of images scraped:</strong> {counter}
               </Typography>
             )}
-            {folder && (
-              <Typography
-                variant="body1"
-                component="div"
-                color="#222"
-                gutterBottom
-              >
-                <strong>System path:</strong> {folder}
-              </Typography>
-            )}
           </Grid>
           <Grid item xs={0} lg={2} />
         </Grid>
@@ -113,6 +108,10 @@ function App() {
       {loading ? (
         <div className="loader">
           <CircularProgress />
+          <div style={{ color: "#121212" }}>
+            <ConstructionIcon /> <ImageIcon />
+            <div>Scraping your images...</div>
+          </div>
         </div>
       ) : (
         <SimpleReactLightbox>

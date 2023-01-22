@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap");
 
 body {
-  color: white
+  color: white;
 }
 
 .MuiFilledInput-root {
@@ -24,16 +24,28 @@ body {
 }
 
 .loader {
-  text-align: center;
-  margin-top: 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50vh;
+  width: 50vw;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.88);
+  z-index: 1;
 }
 
-#folder-helper-text, #folder-label, .MuiRadio-root .MuiSvgIcon-root {
-  color: white
+#folder-helper-text,
+#folder-label,
+.MuiRadio-root .MuiSvgIcon-root {
+  color: white;
 }
 
 .MuiSvgIcon-root {
-  padding-right: 5px
+  padding-right: 5px;
 }
 
 .image-names-box {

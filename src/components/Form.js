@@ -38,13 +38,7 @@ const usePrevious = (value) => {
 };
 
 // TODO: Error handling
-const Form = ({
-  setCounter,
-  setFolder,
-  setRequestError,
-  setImagesList,
-  setLoading,
-}) => {
+const Form = ({ setCounter, setRequestError, setImagesList, setLoading }) => {
   const [formValues, setFormValues] = useState(defaultValues);
   // const [error, setError] = useState(defaultErrors);
   const prevValue = usePrevious(formValues);
@@ -63,7 +57,6 @@ const Form = ({
   const clearResults = () => {
     setImagesList([]);
     setRequestError(null);
-    setFolder(null);
     setCounter(null);
   };
 
@@ -86,13 +79,9 @@ const Form = ({
       body: JSON.stringify(formValues),
     };
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/api/scrape`,
-        requestOptions
-      );
+      const response = await fetch(`/api/scrape`, requestOptions);
       const result = await response.json();
       setImagesList(result?.images);
-      setFolder(result?.folder);
       setCounter(result?.total);
       setLoading(false);
     } catch (error) {
