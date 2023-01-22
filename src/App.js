@@ -10,7 +10,7 @@ import Form from "./components/Form";
 import ImagesList from "./components/ImagesList";
 
 import "./App.css";
-import bg from "./assets/collage.jpg"
+import bg from "./assets/collage.jpg";
 
 const options = {
   buttons: {
@@ -27,17 +27,35 @@ function App() {
 
   return (
     <>
-      <Grid container spacing={2} style={{
-        padding: "8rem 2rem",
-        background: `linear-gradient( rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8) ), url(${bg})`,
-        backgroundSize: 'cover'
-      }}>
+      <Grid
+        container
+        spacing={2}
+        style={{
+          padding: "8rem 2rem",
+          background: `linear-gradient( rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8) ), url(${bg})`,
+          backgroundSize: "cover",
+          height: "100vh",
+          margin: "0 !important",
+          width: "unset !important",
+          alignItems: "center",
+        }}
+      >
         <Grid item xs={0} lg={2} />
         <Grid item xs={12} lg={8}>
-          <Typography variant="h3" component="div" color="common.white" gutterBottom>
+          <Typography
+            variant="h3"
+            component="div"
+            color="common.white"
+            gutterBottom
+          >
             <strong>Image scraper</strong>
           </Typography>
-          <Typography variant="body1" component="div" color="common.white" gutterBottom>
+          <Typography
+            variant="body1"
+            component="div"
+            color="common.white"
+            gutterBottom
+          >
             When you scrape the images from the desired website, a folder will
             be created in your local machine's downloads folder. Also, you will
             be able to see the images that were downloaded here, in a gallery.
@@ -68,12 +86,22 @@ function App() {
           <Grid item xs={0} lg={2} />
           <Grid item xs={12} lg={8}>
             {counter && (
-              <Typography variant="body1" component="div" color="#222" gutterBottom>
+              <Typography
+                variant="body1"
+                component="div"
+                color="#222"
+                gutterBottom
+              >
                 <strong>Number of images scraped:</strong> {counter}
               </Typography>
             )}
             {folder && (
-              <Typography variant="body1" component="div" color="#222" gutterBottom>
+              <Typography
+                variant="body1"
+                component="div"
+                color="#222"
+                gutterBottom
+              >
                 <strong>System path:</strong> {folder}
               </Typography>
             )}
